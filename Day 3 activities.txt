@@ -1,0 +1,155 @@
+1. 
+#include <stdio.h>
+
+void print_numbers(int n) {
+    int i;
+    for (i = 1; i <= n; i++) {
+        printf("%d", i);
+    }
+    for (i = n; i >= 1; i--) {
+        printf("%d", i);
+    }
+}
+
+void print_spaces(int n) {
+    int i;
+    for (i = 0; i < n; i++) {
+        printf(" ");
+    }
+}
+
+void pattern_generator(int n) {
+    int i;
+    for (i = n; i >= 1; i--) {
+        print_numbers(i);
+        if (i > 1) {
+            print_spaces(2 * (n - i));
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the value of n: ");
+    scanf("%d", &n);
+    pattern_generator(n);
+    return 0;
+}
+2.
+#include <stdio.h>
+
+void print_bits(int num) {
+    int i;
+    unsigned int mask = 1 << 31; 
+
+    for (i = 0; i < 32; i++) {
+        int bit = (num & mask) ? 1 : 0;
+
+        printf("%d", bit);
+
+        mask >>= 1; 
+    }
+
+    printf("\n");
+}
+
+int main() {
+    int num;
+    printf("Enter a 32-bit integer: ");
+    scanf("%d", &num);
+
+    printf("Bits representation: ");
+    print_bits(num);
+
+    return 0;
+}
+4.
+#include <stdio.h>
+
+int findLargestNumber(int num) {
+    int maxNum = 0;
+    int divisor = 1;
+    int tempNum = num;
+
+    while (tempNum > 0) {
+        int currentDigit = tempNum % 10;
+        int reducedNum = (num / (divisor * 10)) * divisor + (num % divisor);
+
+        if (reducedNum > maxNum) {
+            maxNum = reducedNum;
+        }
+
+        divisor *= 10;
+        tempNum /= 10;
+    }
+
+    return maxNum;
+}
+
+int main() {
+    int num;
+    printf("Enter a 4-digit number: ");
+    scanf("%d", &num);
+
+    int largestNumber = findLargestNumber(num);
+    printf("Largest number after deleting a single digit: %d\n", largestNumber);
+
+    return 0;
+}
+5.
+#include <stdio.h>
+
+void findSmallestLargestDigits(int n, int numbers[]) {
+    int i, j;
+    int smallestDigit = 9;
+    int largestDigit = 0;
+    int isInputValid = 1;
+
+    for (i = 0; i < n; i++) {
+        int temp = numbers[i];
+
+        while (temp > 0) {
+            int digit = temp % 10;
+
+            if (digit < smallestDigit) {
+                smallestDigit = digit;
+            }
+            if (digit > largestDigit) {
+                largestDigit = digit;
+            }
+
+            temp /= 10;
+        }
+
+        if (numbers[i] < 0) {
+            isInputValid = 0;
+            break;
+        }
+    }
+
+    if (isInputValid) {
+        printf("Smallest digit: %d\n", smallestDigit);
+        printf("Largest digit: %d\n", largestDigit);
+    } else {
+        printf("Not Valid\n");
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of values: ");
+    scanf("%d", &n);
+
+    int numbers[n];
+    int i;
+    for (i = 0; i < n; i++) {
+        printf("Enter number %d: ", i + 1);
+        scanf("%d", &numbers[i]);
+    }
+
+    findSmallestLargestDigits(n, numbers);
+
+    return 0;
+}
+
